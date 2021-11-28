@@ -5,6 +5,7 @@ import firebase from "../../Firebase";
 import { auth } from "../../Firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import logo from "../../extra/website-logo.png";
 function MainNavigation() {
   const [user] = useAuthState(auth);
 
@@ -14,20 +15,28 @@ function MainNavigation() {
       auth.signInWithPopup(provider);
     };
 
-    return <button className={classes.btn} onClick={signInWithGoogle}>Sign in with Google</button>;
+    return (
+      <button className={classes.btn} onClick={signInWithGoogle}>
+        sign in
+      </button>
+    );
   }
 
   function SignOut() {
     return (
       auth.currentUser && (
-        <button className={classes.btn} onClick={() => auth.signOut()}>Sign Out</button>
+        <button className={classes.btn} onClick={() => auth.signOut()}>
+          sign out
+        </button>
       )
     );
   }
 
   return (
     <header className={classes.header}>
-      <div className={classes.logo}>Sabillano</div>
+      <Link to="/">
+        <img src={logo} alt="Logo" width="50em" />
+      </Link>
       <nav>
         <ul>
           <li>
