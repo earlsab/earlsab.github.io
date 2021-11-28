@@ -45,6 +45,7 @@ function MainNavigation() {
           <li>
             <Link to="/wpe">wpe</Link>
           </li>
+          <li>{user ? <Link to ="/wpeform">wpe form</Link> : null}</li>
           <li>{user ? <SignOut /> : <SignIn />}</li>
         </ul>
         <div></div>

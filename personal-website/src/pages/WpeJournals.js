@@ -1,4 +1,4 @@
-import JournalList from "../components/journals/JournalList";
+import JournalList from "../components/wpe-journals/JournalList";
 
 const DUMMY_DATA = [
   {
