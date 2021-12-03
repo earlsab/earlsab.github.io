@@ -1,27 +1,45 @@
+import { useState, useEffect } from "react";
 import JournalList from "../components/wpe-journals/JournalList";
 
-const DUMMY_DATA = [
-  {
-    id: '01',
-    title: 'CCS - Opening Devotions',
-    image: 'https://thumbs.dreamstime.com/z/vervet-monkey-chlorocebus-pygerythrus-5204535.jpg',
-    category: 'Church',
-    essay: 'TestTest Test Test Test'
-  },
-  {
-    id: '02',
-    title: 'Second Something',
-    image: 'https://thumbs.dreamstime.com/z/vervet-monkey-chlorocebus-pygerythrus-5204535.jpg',
-    category: 'Church',
-    essay: 'TestTest Test Test Test'
-  }
-];
-
 function WpeJournalsPage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadedJournals, setLoadedJournals] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetch(
+      "https://personal-website-b35b4-default-rtdb.asia-southeast1.firebasedatabase.app/journals.json"
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        const journals = [];
+
+        for (const key in data) {
+          const journal = {
+            id: key,
+            ...data[key],
+          };
+         journals.push(journal);
+        }
+        setIsLoading(false);
+        setLoadedJournals(journals);
+      });
+  }, []);
+
+  if (isLoading) {
+    return (
+      <section>
+        <p>Loading...</p>
+      </section>
+    );
+  }
+
   return (
     <section>
       <h1>WPE</h1>
-      <JournalList journals={DUMMY_DATA}/>
+      <JournalList journals={loadedJournals} />
     </section>
   );
 }
